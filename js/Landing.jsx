@@ -3,12 +3,11 @@
 import React from 'react';
 import type { RouterHistory } from 'react-router-dom';
 
-const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, history: RouterHistory }) =>  { 
-
-  const goToArticleSearch = (event) => {
+const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, history: RouterHistory }) => {
+  const goToArticleSearch = event => {
     event.preventDefault();
     props.history.push('/search');
-  }
+  };
 
   return (
     <div className="row">
@@ -34,5 +33,5 @@ const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, 
       </div>
     </div>
   );
-}
+};
 export default Landing;

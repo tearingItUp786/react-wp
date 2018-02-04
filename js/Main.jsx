@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Landing from './Landing';
+import Search from './Search';
 import Fourohfour from './Fourohfour';
 
 class Main extends Component<{}, { searchTerm: string }> {
@@ -10,7 +11,7 @@ class Main extends Component<{}, { searchTerm: string }> {
     searchTerm: ''
   };
 
-  handleSearchTermChange = (event: SyntheticKeyboardEvent & { target: HTMLInputElement }) => {
+  handleSearchTermChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
   };
 
@@ -29,6 +30,7 @@ class Main extends Component<{}, { searchTerm: string }> {
               />
             )}
           />
+          <Route exact path="/search" component={ (props) => <Search searchTerm={this.state.searchTerm} {...props} />} />
           <Route component={Fourohfour} />
         </Switch>
       </BrowserRouter>
