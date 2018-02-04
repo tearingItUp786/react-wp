@@ -23,9 +23,8 @@
 		"node": true,
     "jest": true
 	},
-	"rules": {
-		"flowtype/define-flow-type": 1,
-    "flowtype/use-flow-type": 1,
-		"linebreak-style": 0
-	}
+  "rules": {
+		"linebreak-style": 0,
+		"flowtype/no-types-missing-file-annotation": 0
+  }
 }

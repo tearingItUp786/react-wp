@@ -2,12 +2,17 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
 
+const rootEl = document.getElementById('app');
+
+if (!(rootEl instanceof Element)) {
+  throw new Error('invalid type');
+}
+
 const renderApp = () => {
-  render(<App />, document.getElementById('app'));
+  render(<App />, rootEl);
 };
 renderApp();
 

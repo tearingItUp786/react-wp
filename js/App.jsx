@@ -1,23 +1,17 @@
 // @flow
 
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Landing from './Landing';
+import React from 'react';
+import Main from './Main';
 
-class App extends Component {
-  state = {
-    searchTerm: ''
-  }
-
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Landing} searchTerm={this.state.searchTerm} />
-        </Switch>
-      </BrowserRouter>
-    )
-  }
-}
+const App = () => (
+  <div className="container-fluid">
+    <nav className="navbar navbar-toggleable-md navbar-inverse bg-primary">
+      <a className="navbar-brand" href="/">
+        Navbar
+      </a>
+    </nav>
+    <Main />
+  </div>
+);
 
 export default App;

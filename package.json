@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"js/**/*.{js,jsx}\"",
     "lint": "eslint **/*.{js,jsx} --quiet",
+    "lint:fix": "eslint **/*.{js,jsx} --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:update": "jest -u",
@@ -24,11 +25,18 @@
     "url": "https://github.com/tearingItUp786/react-wp/issues"
   },
   "homepage": "https://github.com/tearingItUp786/react-wp#readme",
+  "jest": {
+    "snapshotSerializers": [
+      "jest-serializer-enzyme"
+    ]
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-register": "^6.26.0",
     "bootstrap": "^4.0.0",
+    "cors": "^2.8.4",
     "flow-typed": "^2.3.0",
     "global": "^4.3.2",
     "react": "^16.2.0",
@@ -44,6 +52,7 @@
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-react-flow-props-to-prop-types": "^0.15.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
@@ -52,7 +61,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.9",
     "enzyme": "^3.3.0",
-    "eslint": "^4.16.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react": "^1.1.7",
