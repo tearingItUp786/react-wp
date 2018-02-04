@@ -1,46 +1,78 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import type { RouterHistory } from 'react-router-dom';
+import axios from 'axios';
+import { WP_CATEGORIES } from './config';
+import Categories from './Categories';
 
-const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, categories: Array<*>, history: RouterHistory }) => {
-  const goToArticleSearch = event => {
+type Props = {
+  handleSearchTermChange: Function,
+  searchTerm: string,
+  history: RouterHistory
+};
+
+type State = {
+  categories: Array<*>,
+  values: Array<*>
+};
+
+class Landing extends Component<Props, State> {
+  
+  state = {
+    categories: [],
+    values: []
+  }
+
+  componentDidMount() {
+    axios.get(WP_CATEGORIES).then((response: { data: Array<*> }) => {
+      this.setState({ categories: response.data });
+    });
+  }
+
+  goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
-    props.history.push('/search');
+    this.props.history.push('/search');
   };
 
-  
-  return (
-    <div className="row">
-      <div className="col-sm-12">
-        <form onSubmit={goToArticleSearch}>
-          <div className="form-group">
-            <label htmlFor="searchWord">
-              Search Blog
-              <input
-                value={props.searchTerm}
-                onChange={props.handleSearchTermChange}
-                type="text"
-                className="form-control"
-                id="searchWord"
-                placeholder="search the blog"
-              />
-            </label>
-          </div>
-          <div className="form-group">
-          <label htmlFor="exampleSelect1">
-            Categories select
-            <select className="form-control" id="exampleSelect1">
-              {props.categories.map( (currentCategory) => <option dangerouslySetInnerHTML={ {__html: currentCategory.name} } />)}
-            </select>
-          </label>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Search
-          </button>
-        </form>
+  handleCategoryChange = (event: SyntheticEvent<*>) => {
+    const { options } = event.currentTarget;
+    const values = [];
+    for (let i = 0; i < options.length; i += 1) {
+      if (options[i].selected) {
+        values.push(options[i].value);
+      }
+    }
+    this.setState({ values });
+  };
+
+  render() {
+    return (
+      <div className="row">
+        <div className="col-sm-12">
+          <form onSubmit={this.goToArticleSearch}>
+            <div className="form-group">
+              <label htmlFor="searchWord">
+                Search Blog
+                <input
+                  value={this.props.searchTerm}
+                  onChange={this.props.handleSearchTermChange}
+                  type="text"
+                  className="form-control"
+                  id="searchWord"
+                  placeholder="search the blog"
+                />
+              </label>
+            </div>
+            <Categories handleCategoryChange={this.handleCategoryChange} values={this.state.values} categories={this.state.categories}/>
+            <button type="submit" className="btn btn-primary">
+              Search
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
+
 export default Landing;

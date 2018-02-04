@@ -6,14 +6,18 @@ import Landing from './Landing';
 import Search from './Search';
 import Fourohfour from './Fourohfour';
 
-class Main extends Component<{}, { searchTerm: string }> {
+type State = {
+  searchTerm: string
+};
+
+class Main extends Component<{}, State> {
   state = {
     searchTerm: ''
   };
 
   props: {
     categories: Array<*>
-  }
+  };
 
   handleSearchTermChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
@@ -35,7 +39,7 @@ class Main extends Component<{}, { searchTerm: string }> {
               />
             )}
           />
-          <Route exact path="/search" component={props => <Search searchTerm={this.state.searchTerm} {...props} />} />
+          <Route path="/search/:category?" component={props => <Search searchTerm={this.state.searchTerm} {...props} />} />
           <Route component={Fourohfour} />
         </Switch>
       </BrowserRouter>

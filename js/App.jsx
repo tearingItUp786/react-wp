@@ -3,22 +3,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Main from './Main';
-import { WP_REST_URL, WP_CATEGORIES } from './config';
+import { WP_REST_URL } from './config';
 
-class App extends Component<{}, {siteTitle: string, categories: Array}> {
+class App extends Component<{}, { siteTitle: string }> {
   state = {
-    siteTitle: 'Navbar',
-    categories: [],
+    siteTitle: 'Navbar'
   };
+
   componentDidMount() {
-    axios.get(WP_REST_URL).then( ( response: { data: { name: string }} ) => {
+    axios.get(WP_REST_URL).then((response: { data: { name: string } }) => {
       this.setState({ siteTitle: response.data.name });
     });
-
-    axios.get(WP_CATEGORIES).then ( (response: { data: Array<*> }) => {
-      this.setState({categories: response.data});
-    })
   }
+
   render() {
     return (
       <div className="container-fluid">
@@ -27,7 +24,7 @@ class App extends Component<{}, {siteTitle: string, categories: Array}> {
             {this.state.siteTitle}
           </a>
         </nav>
-        <Main categories={this.state.categories}/>
+        <Main />
       </div>
     );
   }
