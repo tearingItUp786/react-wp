@@ -3,12 +3,13 @@
 import React from 'react';
 import type { RouterHistory } from 'react-router-dom';
 
-const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, history: RouterHistory }) => {
+const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, categories: Array<*>, history: RouterHistory }) => {
   const goToArticleSearch = event => {
     event.preventDefault();
     props.history.push('/search');
   };
 
+  
   return (
     <div className="row">
       <div className="col-sm-12">
@@ -25,6 +26,14 @@ const Landing = (props: { handleSearchTermChange: Function, searchTerm: string, 
                 placeholder="search the blog"
               />
             </label>
+          </div>
+          <div className="form-group">
+          <label htmlFor="exampleSelect1">
+            Categories select
+            <select className="form-control" id="exampleSelect1">
+              {props.categories.map( (currentCategory) => <option dangerouslySetInnerHTML={ {__html: currentCategory.name} } />)}
+            </select>
+          </label>
           </div>
           <button type="submit" className="btn btn-primary">
             Search
