@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Landing from './Landing';
 import Search from './Search';
 import Fourohfour from './Fourohfour';
@@ -25,7 +25,6 @@ class Main extends Component<{}, State> {
 
   render() {
     return (
-      <BrowserRouter>
         <Switch>
           <Route
             exact
@@ -45,7 +44,6 @@ class Main extends Component<{}, State> {
           />
           <Route component={Fourohfour} />
         </Switch>
-      </BrowserRouter>
     );
   }
 }

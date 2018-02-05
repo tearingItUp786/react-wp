@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { BrowserRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import Main from './Main';
 import { WP_REST_URL } from './config';
@@ -21,14 +22,16 @@ class App extends Component<{}, { siteTitle: string }> {
 
   render() {
     return (
+      <BrowserRouter>
       <div className="container-fluid">
         <nav className="navbar navbar-toggleable-md navbar-inverse bg-primary">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             {this.state.siteTitle}
-          </a>
+          </Link>
         </nav>
         <Main />
       </div>
+      </BrowserRouter>
     );
   }
 }
