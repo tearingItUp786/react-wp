@@ -11,9 +11,12 @@ class App extends Component<{}, { siteTitle: string }> {
   };
 
   componentDidMount() {
-    axios.get(WP_REST_URL).then((response: { data: { name: string } }) => {
-      this.setState({ siteTitle: response.data.name });
-    }).catch(error => console.log(error));
+    axios
+      .get(WP_REST_URL)
+      .then((response: { data: { name: string } }) => {
+        this.setState({ siteTitle: response.data.name });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {

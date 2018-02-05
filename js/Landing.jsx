@@ -24,17 +24,20 @@ class Landing extends Component<Props, State> {
   };
 
   componentDidMount() {
-    axios.get(`${WP_CATEGORIES}/`).then((response: { data: Array<*> }) => {
-      this.setState({ categories: response.data });
-    }).catch(error => <h1>{error}</h1>);
+    axios
+      .get(`${WP_CATEGORIES}/`)
+      .then((response: { data: Array<*> }) => {
+        this.setState({ categories: response.data });
+      })
+      .catch(error => <h1>{error}</h1>);
   }
 
   goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
 
-    let stringOfCategories = this.state.values.map( (currentCategory) => currentCategory.toString() )
+    let stringOfCategories = this.state.values.map(currentCategory => currentCategory.toString());
     stringOfCategories = stringOfCategories.toString();
-    
+
     const historyPushValue = `/search/${stringOfCategories}`;
 
     this.props.history.push(`${historyPushValue}`);

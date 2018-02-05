@@ -29,9 +29,12 @@ class Search extends Component<Props, State> {
       searchURL = `${searchURL}&categories=${categoriesString}`;
     }
 
-    axios.get(searchURL).then(response => {
-      this.setState({ data: response.data });
-    }).catch(error => console.log(error));
+    axios
+      .get(searchURL)
+      .then(response => {
+        this.setState({ data: response.data });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -41,7 +44,7 @@ class Search extends Component<Props, State> {
           <h1>{this.props.match.params.category}</h1>
           <h1>Search</h1>
           <h2>{this.props.searchTerm}</h2>
-          {this.state.data.map( (currentArticle) => <ArticleCard key={currentArticle.id} {...currentArticle}/> )}
+          {this.state.data.map(currentArticle => <ArticleCard key={currentArticle.id} {...currentArticle} />)}
         </div>
       </div>
     );
