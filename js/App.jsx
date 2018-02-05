@@ -23,14 +23,14 @@ class App extends Component<{}, { siteTitle: string }> {
   render() {
     return (
       <BrowserRouter>
-      <div className="container-fluid">
-        <nav className="navbar navbar-toggleable-md navbar-inverse bg-primary">
-          <Link className="navbar-brand" to="/">
-            {this.state.siteTitle}
-          </Link>
-        </nav>
-        <Main />
-      </div>
+        <div className="container-fluid">
+          <nav className="navbar navbar-toggleable-md navbar-inverse bg-primary">
+            <Link className="navbar-brand" to="/">
+              {this.state.siteTitle}
+            </Link>
+          </nav>
+          <Main />
+        </div>
       </BrowserRouter>
     );
   }

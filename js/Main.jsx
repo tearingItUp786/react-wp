@@ -25,25 +25,25 @@ class Main extends Component<{}, State> {
 
   render() {
     return (
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Landing
-                categories={this.props.categories}
-                searchTerm={this.state.searchTerm}
-                handleSearchTermChange={this.handleSearchTermChange}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/search/:category?"
-            component={props => <Search searchTerm={this.state.searchTerm} {...props} />}
-          />
-          <Route component={Fourohfour} />
-        </Switch>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <Landing
+              categories={this.props.categories}
+              searchTerm={this.state.searchTerm}
+              handleSearchTermChange={this.handleSearchTermChange}
+              {...props}
+            />
+          )}
+        />
+        <Route
+          path="/search/:category?"
+          component={props => <Search searchTerm={this.state.searchTerm} {...props} />}
+        />
+        <Route component={Fourohfour} />
+      </Switch>
     );
   }
 }
