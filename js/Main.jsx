@@ -39,7 +39,10 @@ class Main extends Component<{}, State> {
               />
             )}
           />
-          <Route path="/search/:category?" component={props => <Search searchTerm={this.state.searchTerm} {...props} />} />
+          <Route
+            path="/search/:category?"
+            component={props => <Search searchTerm={this.state.searchTerm} {...props} />}
+          />
           <Route component={Fourohfour} />
         </Switch>
       </BrowserRouter>

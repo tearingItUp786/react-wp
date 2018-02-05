@@ -18,21 +18,26 @@ type State = {
 };
 
 class Landing extends Component<Props, State> {
-  
   state = {
     categories: [],
     values: []
-  }
+  };
 
   componentDidMount() {
-    axios.get(WP_CATEGORIES).then((response: { data: Array<*> }) => {
+    axios.get(`${WP_CATEGORIES}/`).then((response: { data: Array<*> }) => {
       this.setState({ categories: response.data });
-    });
+    }).catch(error => <h1>{error}</h1>);
   }
 
   goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
-    this.props.history.push('/search');
+
+    let stringOfCategories = this.state.values.map( (currentCategory) => currentCategory.toString() )
+    stringOfCategories = stringOfCategories.toString();
+    
+    const historyPushValue = `/search/${stringOfCategories}`;
+
+    this.props.history.push(`${historyPushValue}`);
   };
 
   handleCategoryChange = (event: SyntheticEvent<*>) => {
@@ -64,7 +69,11 @@ class Landing extends Component<Props, State> {
                 />
               </label>
             </div>
-            <Categories handleCategoryChange={this.handleCategoryChange} values={this.state.values} categories={this.state.categories}/>
+            <Categories
+              handleCategoryChange={this.handleCategoryChange}
+              values={this.state.values}
+              categories={this.state.categories}
+            />
             <button type="submit" className="btn btn-primary">
               Search
             </button>
