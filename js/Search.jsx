@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import type { Match } from 'react-router-dom';
 import axios from 'axios';
-import { WP_POSTS } from './config';
+import { constructWordPressPostURL } from './config';
 import ArticleCard from './ArticleCard';
 
 type Props = {
@@ -22,17 +22,21 @@ class Search extends Component<Props, State> {
 
   componentDidMount() {
     const { match } = this.props;
-    let searchURL = `${WP_POSTS}?per_page=3`;
+
+    let searchTerm;
+    let categories;
+    const perPage = 3;
 
     if (match.params.searchTerm !== undefined && match.params.searchTerm !== null) {
-      match.params.searchTerm = match.params.searchTerm.toString();
-      searchURL = `${searchURL}&search=${match.params.searchTerm}`;
+      searchTerm = match.params.searchTerm.toString();
     }
 
     if (match.params.categories !== undefined && match.params.categories !== null) {
-      const categoriesString = match.params.categories.toString();
-      searchURL = `${searchURL}&categories=${categoriesString}`;
+      categories = match.params.categories.toString();
     }
+
+    const searchURL = constructWordPressPostURL({ perPage, searchTerm, categories });
+    console.log(searchURL);
 
     axios
       .get(searchURL)

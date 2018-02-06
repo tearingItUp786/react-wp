@@ -9,7 +9,7 @@ type Props = {
   handleSearchTermChange: Function,
   handleCategoryChange: Function,
   categoryValues: Array<*>,
-  categories: Array<string>,
+  categories: Array<*>,
   searchTerm: string,
   history: RouterHistory
 };

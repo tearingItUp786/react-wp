@@ -3,7 +3,7 @@
 import React from 'react';
 
 type Props = {
-  categories: Array<*>,
+  categories: Array<any>,
   values: Array<*>,
   handleCategoryChange: Function
 };
