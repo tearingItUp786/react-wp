@@ -1,90 +1,64 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import type { RouterHistory } from 'react-router-dom';
-import axios from 'axios';
-import { WP_CATEGORIES } from './config';
+
 import Categories from './Categories';
 
 type Props = {
   handleSearchTermChange: Function,
+  handleCategoryChange: Function,
+  categoryValues: Array<*>,
+  categories: Array<string>,
   searchTerm: string,
   history: RouterHistory
 };
 
-type State = {
-  categories: Array<*>,
-  values: Array<*>
-};
-
-class Landing extends Component<Props, State> {
-  state = {
-    categories: [],
-    values: []
-  };
-
-  componentDidMount() {
-    axios
-      .get(`${WP_CATEGORIES}/`)
-      .then((response: { data: Array<*> }) => {
-        this.setState({ categories: response.data });
-      })
-      .catch(error => <h1>{error}</h1>);
-  }
-
-  goToArticleSearch = (event: SyntheticEvent<*>) => {
+const Landing = (props: Props) => {
+  const goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
 
-    let stringOfCategories = this.state.values.map(currentCategory => currentCategory.toString());
+    let stringOfCategories = props.categoryValues.map(currentCategory => currentCategory.toString());
     stringOfCategories = stringOfCategories.toString();
 
-    const historyPushValue = `/search/${stringOfCategories}`;
+    let historyPushValue = `/search/${props.searchTerm}`;
 
-    this.props.history.push(`${historyPushValue}`);
-  };
-
-  handleCategoryChange = (event: SyntheticEvent<*>) => {
-    const { options } = event.currentTarget;
-    const values = [];
-    for (let i = 0; i < options.length; i += 1) {
-      if (options[i].selected) {
-        values.push(options[i].value);
-      }
+    if (stringOfCategories !== '') {
+      historyPushValue = `${historyPushValue}/${stringOfCategories}`;
     }
-    this.setState({ values });
+
+    props.history.push(`${historyPushValue}`);
   };
 
-  render() {
-    return (
-      <div className="row">
-        <div className="col-sm-12">
-          <form onSubmit={this.goToArticleSearch}>
-            <div className="form-group">
-              <label htmlFor="searchWord">
-                Search Blog
-                <input
-                  value={this.props.searchTerm}
-                  onChange={this.props.handleSearchTermChange}
-                  type="text"
-                  className="form-control"
-                  id="searchWord"
-                  placeholder="search the blog"
-                />
-              </label>
-            </div>
-            <Categories
-              handleCategoryChange={this.handleCategoryChange}
-              values={this.state.values}
-              categories={this.state.categories}
-            />
-            <button type="submit" className="btn btn-primary">
-              Search
-            </button>
-          </form>
-        </div>
+  return (
+    <div className="row">
+      <div className="col-sm-12">
+        <form onSubmit={goToArticleSearch}>
+          <div className="form-group">
+            <label htmlFor="searchWord">
+              Search Blog
+              <input
+                value={props.searchTerm}
+                onChange={props.handleSearchTermChange}
+                type="text"
+                className="form-control"
+                id="searchWord"
+                placeholder="search the blog"
+              />
+            </label>
+          </div>
+          <Categories
+            handleCategoryChange={props.handleCategoryChange}
+            values={props.categoryValues}
+            categories={props.categories}
+          />
+          <button type="submit" className="btn btn-primary">
+            Search
+          </button>
+        </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Landing;

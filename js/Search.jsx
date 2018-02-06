@@ -24,8 +24,13 @@ class Search extends Component<Props, State> {
     const { match } = this.props;
     let searchURL = `${WP_POSTS}?per_page=3`;
 
-    if (match.params.category !== undefined && match.params.category !== null) {
-      const categoriesString = match.params.category.toString();
+    if (match.params.searchTerm !== undefined && match.params.searchTerm !== null) {
+      match.params.searchTerm = match.params.searchTerm.toString();
+      searchURL = `${searchURL}&search=${match.params.searchTerm}`;
+    }
+
+    if (match.params.categories !== undefined && match.params.categories !== null) {
+      const categoriesString = match.params.categories.toString();
       searchURL = `${searchURL}&categories=${categoriesString}`;
     }
 
