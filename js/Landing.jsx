@@ -2,14 +2,17 @@
 
 import React from 'react';
 import type { RouterHistory } from 'react-router-dom';
-
 import Categories from './Categories';
+import Authors from './Authors';
 
 type Props = {
   handleSearchTermChange: Function,
   handleCategoryChange: Function,
+  handleAuthorChange: Function,
   categoryValues: Array<*>,
   categories: Array<*>,
+  authors: Array<*>,
+  authorValues: Array<*>,
   searchTerm: string,
   history: RouterHistory
 };
@@ -18,13 +21,18 @@ const Landing = (props: Props) => {
   const goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
 
+    let historyPushValue = `/search?searchTerm=${props.searchTerm}`;
     let stringOfCategories = props.categoryValues.map(currentCategory => currentCategory.toString());
+    let stringOfAuthors = props.authorValues.map(currentAuthor => currentAuthor.toString());
+    stringOfAuthors = stringOfAuthors.toString();
     stringOfCategories = stringOfCategories.toString();
 
-    let historyPushValue = `/search/${props.searchTerm}`;
-
     if (stringOfCategories !== '') {
-      historyPushValue = `${historyPushValue}/${stringOfCategories}`;
+      historyPushValue = `${historyPushValue}&categories=${stringOfCategories}`;
+    }
+
+    if (stringOfAuthors !== '' ) {
+      historyPushValue = `${historyPushValue}&author=${stringOfAuthors}`;
     }
 
     props.history.push(`${historyPushValue}`);
@@ -51,6 +59,11 @@ const Landing = (props: Props) => {
             handleCategoryChange={props.handleCategoryChange}
             values={props.categoryValues}
             categories={props.categories}
+          />
+          <Authors
+            handleAuthorChange={props.handleAuthorChange}
+            values={props.authorValues}
+            authors={props.authors}
           />
           <button type="submit" className="btn btn-primary">
             Search

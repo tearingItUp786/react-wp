@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import type { Match } from 'react-router-dom';
+import type { Match, Location } from 'react-router-dom';
 import axios from 'axios';
 import { constructWordPressPostURL } from './config';
 import ArticleCard from './ArticleCard';
 
 type Props = {
-  searchTerm: string,
+  location: Location,
   match: Match
 };
 
@@ -21,22 +21,26 @@ class Search extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const { match } = this.props;
-
+    const params = new URLSearchParams(this.props.location.search);
     let searchTerm;
     let categories;
-    const perPage = 3;
+    let authors;
+    const perPage = 5;
 
-    if (match.params.searchTerm !== undefined && match.params.searchTerm !== null) {
-      searchTerm = match.params.searchTerm.toString();
+    if (params.get('searchTerm') !== null) {
+      searchTerm = params.get('searchTerm');
     }
 
-    if (match.params.categories !== undefined && match.params.categories !== null) {
-      categories = match.params.categories.toString();
+    if (params.get('categories') !== null) {
+      categories = params.get('categories');
     }
 
-    const searchURL = constructWordPressPostURL({ perPage, searchTerm, categories });
-    console.log(searchURL);
+    if (params.get('author') !== null) {
+      authors = params.get('author');
+    }
+
+    const searchURL = constructWordPressPostURL({ perPage, searchTerm, categories, authors });
+    console.log(authors,searchURL);
 
     axios
       .get(searchURL)
@@ -52,7 +56,7 @@ class Search extends Component<Props, State> {
         <div className="col-sm-12">
           <h1>{this.props.match.params.category}</h1>
           <h1>Search</h1>
-          <h2>{this.props.searchTerm}</h2>
+          <h2>{this.props.match.params.searchTerm}</h2>
           {this.state.data.map(currentArticle => <ArticleCard key={currentArticle.id} {...currentArticle} />)}
         </div>
       </div>
