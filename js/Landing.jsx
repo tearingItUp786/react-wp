@@ -31,7 +31,7 @@ const Landing = (props: Props) => {
       historyPushValue = `${historyPushValue}&categories=${stringOfCategories}`;
     }
 
-    if (stringOfAuthors !== '' ) {
+    if (stringOfAuthors !== '') {
       historyPushValue = `${historyPushValue}&author=${stringOfAuthors}`;
     }
 
@@ -60,11 +60,7 @@ const Landing = (props: Props) => {
             values={props.categoryValues}
             categories={props.categories}
           />
-          <Authors
-            handleAuthorChange={props.handleAuthorChange}
-            values={props.authorValues}
-            authors={props.authors}
-          />
+          <Authors handleAuthorChange={props.handleAuthorChange} values={props.authorValues} authors={props.authors} />
           <button type="submit" className="btn btn-primary">
             Search
           </button>

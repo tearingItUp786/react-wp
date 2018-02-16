@@ -40,7 +40,7 @@ class Search extends Component<Props, State> {
     }
 
     const searchURL = constructWordPressPostURL({ perPage, searchTerm, categories, authors });
-    console.log(authors,searchURL);
+    console.log(authors, searchURL);
 
     axios
       .get(searchURL)

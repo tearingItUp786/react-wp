@@ -29,7 +29,7 @@ class Main extends Component<Props, State> {
   };
 
   componentDidMount() {
-    axios.all([ getCategories(), getUsers() ]).then(
+    axios.all([getCategories(), getUsers()]).then(
       axios.spread((categories, authors) => {
         this.setState({
           categories: categories.data,
@@ -63,7 +63,7 @@ class Main extends Component<Props, State> {
       }
     }
     this.setState({ authorValues });
-  }
+  };
 
   render() {
     return (
