@@ -21,7 +21,7 @@ const Landing = (props: Props) => {
   const goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
 
-    let historyPushValue = `/search?searchTerm=${props.searchTerm}`;
+    let historyPushValue = `/search?searchTerm=${props.searchTerm}&page=1`;
     let stringOfCategories = props.categoryValues.map(currentCategory => currentCategory.toString());
     let stringOfAuthors = props.authorValues.map(currentAuthor => currentAuthor.toString());
     stringOfAuthors = stringOfAuthors.toString();

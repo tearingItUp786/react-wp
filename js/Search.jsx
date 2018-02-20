@@ -1,31 +1,90 @@
 // @flow
 
 import React, { Component } from 'react';
-import type { Match, Location } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import type { Match, Location, RouterHistory } from 'react-router-dom';
 import axios from 'axios';
 import { constructWordPressPostURL } from './config';
 import ArticleCard from './ArticleCard';
 
 type Props = {
   location: Location,
-  match: Match
+  match: Match,
+  history: RouterHistory
 };
 
 type State = {
-  data: Array<*>
+  data: Array<*>,
+  searchTerm: string,
+  categories: string,
+  author: string,
+  currentPage: number,
+  totalPages: number,
+  perPage: number
+};
+
+const Pagination = props => {
+  const pageLinkElementsArray = [];
+
+  // eslint-disable-next-line
+  const { searchTerm, categories, authors, totalPages, currentPage } = props;
+
+  for (let i = 1; i <= totalPages; i += 1) {
+    let listItemClass = 'page-item';
+    if (i === currentPage) {
+      listItemClass = `${listItemClass} active`;
+    }
+    pageLinkElementsArray.push(
+      <li key={i} className={listItemClass}>
+        <Link
+          className="page-link"
+          to={`/search?searchTerm=${searchTerm}&page=${i}&categories=${categories}&author=${authors}`}
+        >
+          {i}
+        </Link>
+      </li>
+    );
+  }
+
+  return (
+    <nav aria-label="pagination">
+      <ul className="pagination">{pageLinkElementsArray}</ul>
+    </nav>
+  );
 };
 
 class Search extends Component<Props, State> {
   state = {
-    data: []
+    data: [],
+    searchTerm: '',
+    categories: '',
+    authors: '',
+    currentPage: 1,
+    totalPages: 1,
+    perPage: 5
   };
 
   componentDidMount() {
+    axios
+      .get(this.createSearchURL())
+      .then(response => {
+        this.setState({ data: response.data });
+
+        if (response.headers !== undefined) {
+          this.setState({ totalPages: response.headers['x-wp-totalpages'] });
+        }
+        // console.log(response.headers);
+      })
+      .catch(error => console.log(error));
+  }
+
+  createSearchURL = () => {
     const params = new URLSearchParams(this.props.location.search);
     let searchTerm;
     let categories;
     let authors;
-    const perPage = 5;
+    let { currentPage } = this.state;
+    const { perPage } = this.state;
 
     if (params.get('searchTerm') !== null) {
       searchTerm = params.get('searchTerm');
@@ -39,20 +98,36 @@ class Search extends Component<Props, State> {
       authors = params.get('author');
     }
 
-    const searchURL = constructWordPressPostURL({ perPage, searchTerm, categories, authors });
-    console.log(authors, searchURL);
+    if (params.get('page') !== null) {
+      currentPage = Number(params.get('page'));
+    }
 
-    axios
-      .get(searchURL)
-      .then(response => {
-        this.setState({ data: response.data });
-      })
-      .catch(error => console.log(error));
-  }
+    // $FlowFixMe
+    this.setState({
+      searchTerm,
+      currentPage,
+      categories,
+      authors
+    });
+
+    const searchURL = constructWordPressPostURL({ currentPage, perPage, searchTerm, categories, authors });
+    console.log(authors, searchURL);
+    return searchURL;
+  };
 
   render() {
+    const { searchTerm, categories, authors, totalPages, currentPage } = this.state;
     return (
       <div className="row">
+        <div className="col-sm-12">
+          <Pagination
+            searchTerm={searchTerm}
+            categories={categories}
+            authors={authors}
+            totalPages={totalPages}
+            currentPage={currentPage}
+          />
+        </div>
         <div className="col-sm-12">
           <h1>{this.props.match.params.category}</h1>
           <h1>Search</h1>
