@@ -67,29 +67,31 @@ class Main extends Component<Props, State> {
 
   render() {
     return (
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={props => (
-            <Landing
-              searchTerm={this.state.searchTerm}
-              categories={this.state.categories}
-              categoryValues={this.state.categoryValues}
-              handleSearchTermChange={this.handleSearchTermChange}
-              handleCategoryChange={this.handleCategoryChange}
-              authors={this.state.authors}
-              authorValues={this.state.authorValues}
-              handleAuthorChange={this.handleAuthorChange}
-              {...props}
-            />
-          )}
-        />
-        <Route path="/search" component={props => <Search {...props} />} />
-        <Route path="/article/:id" component={props => <Article {...props} />} />
+      <div>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Landing
+                searchTerm={this.state.searchTerm}
+                categories={this.state.categories}
+                categoryValues={this.state.categoryValues}
+                handleSearchTermChange={this.handleSearchTermChange}
+                handleCategoryChange={this.handleCategoryChange}
+                authors={this.state.authors}
+                authorValues={this.state.authorValues}
+                handleAuthorChange={this.handleAuthorChange}
+                {...props}
+              />
+            )}
+          />
+          <Route path="/search" component={props => <Search {...props} />} />
+          <Route path="/article/:id" component={props => <Article {...props} />} />
 
-        <Route component={Fourohfour} />
-      </Switch>
+          <Route component={Fourohfour} />
+        </Switch>
+      </div>
     );
   }
 }

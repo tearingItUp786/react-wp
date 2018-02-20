@@ -35,3 +35,7 @@ export function getCategories() {
 export function getUsers() {
   return axios.get(`${WP_USERS}/`);
 }
+
+export function getSinglePost(postID) {
+  return axios.get(`${WP_POSTS}?include=${postID}`);
+}
