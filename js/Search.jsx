@@ -28,6 +28,15 @@ const Pagination = props => {
 
   // eslint-disable-next-line
   const { searchTerm, categories, authors, totalPages, currentPage } = props;
+  let linkTo = `/search?searchTerm=${searchTerm}`;
+
+  if (categories !== undefined) {
+    linkTo = `${linkTo}&categories=${categories}`;
+  }
+
+  if (authors !== undefined) {
+    linkTo = `${linkTo}&author=${authors}`;
+  }
 
   for (let i = 1; i <= totalPages; i += 1) {
     let listItemClass = 'page-item';
@@ -36,10 +45,7 @@ const Pagination = props => {
     }
     pageLinkElementsArray.push(
       <li key={i} className={listItemClass}>
-        <Link
-          className="page-link"
-          to={`/search?searchTerm=${searchTerm}&page=${i}&categories=${categories}&author=${authors}`}
-        >
+        <Link className="page-link" to={`${linkTo}&page=${i}`}>
           {i}
         </Link>
       </li>
