@@ -42,6 +42,10 @@ class Main extends Component<Props, State> {
     );
   }
 
+  updatePageNumber = (newPageNumber: number) => {
+    this.setState({ pageNumber: newPageNumber });
+  }
+
   handleSearchTermChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
   };
@@ -121,7 +125,12 @@ class Main extends Component<Props, State> {
               />
             )}
           />
-          <Route path="/search" component={props => <Search pageNumber={this.state.pageNumber} {...props} />} />
+          <Route
+            path="/search"
+            component={props => (
+              <Search pageNumber={this.state.pageNumber} updatePageNumber={this.updatePageNumber} {...props} />
+            )}
+          />
           <Route path="/article/:id" component={props => <Article {...props} />} />
 
           <Route component={Fourohfour} />
