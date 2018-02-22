@@ -44,7 +44,7 @@ class Main extends Component<Props, State> {
 
   updatePageNumber = (newPageNumber: number) => {
     this.setState({ pageNumber: newPageNumber });
-  }
+  };
 
   handleSearchTermChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });

@@ -36,7 +36,7 @@ class Search extends Component<Props, State> {
 
   componentDidMount() {
     axios
-      .get (this.createSearchURL()) 
+      .get(this.createSearchURL())
       .then(response => {
         this.setState({ data: response.data });
 
@@ -70,7 +70,7 @@ class Search extends Component<Props, State> {
 
     if (params.get('page') !== null) {
       currentPage = Number(params.get('page'));
-      if (currentPage !== pageNumber ) {
+      if (currentPage !== pageNumber) {
         this.props.updatePageNumber(currentPage);
       }
     }
