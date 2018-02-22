@@ -41,3 +41,7 @@ export function getUsers() {
 export function getSinglePost(postID) {
   return axios.get(`${WP_POSTS}?include=${postID}`);
 }
+
+export function getRelatedPostsBasedOnCategory(categories, numberOfPosts = 4) {
+  return axios.get(`${WP_POSTS}?categories=${categories}&per_page=${numberOfPosts}`);
+}

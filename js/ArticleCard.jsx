@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 type Props = {
   id: string,
   title: { rendered: string },
-  excerpt: { rendered: string },
+  excerpt: ?{ rendered: string },
   featured_media: string
 };
 
@@ -15,7 +15,7 @@ const ArticleCard = (props: Props) => (
     <Link to={`/article/${props.id}`}>
       <div className="col-sm-12">
         <h1 dangerouslySetInnerHTML={{ __html: props.title.rendered }} />
-        <h2 dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }} />
+        {props.excerpt ? <h2 dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }} /> : ''}
         <h3 dangerouslySetInnerHTML={{ __html: props.featured_media }} />
       </div>
     </Link>
