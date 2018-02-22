@@ -8,13 +8,15 @@ import Landing from './Landing';
 import Search from './Search';
 import Article from './Article';
 import Fourohfour from './Fourohfour';
+import Header from './Header';
 
 type State = {
   searchTerm: string,
   categories: Array<string>,
   categoryValues: Array<*>,
   authors: Array<string>,
-  authorValues: Array<*>
+  authorValues: Array<*>,
+  pageNumber: number
 };
 
 type Props = {};
@@ -25,7 +27,8 @@ class Main extends Component<Props, State> {
     categories: [],
     categoryValues: [],
     authors: [],
-    authorValues: []
+    authorValues: [],
+    pageNumber: 1
   };
 
   componentDidMount() {
@@ -65,9 +68,40 @@ class Main extends Component<Props, State> {
     this.setState({ authorValues });
   };
 
+  createLinkForSearch = (pageNumber: number, searchTerm: string, categories: Array<*>, authors: Array<*>) => {
+    let historyPushValue = `/search?searchTerm=${searchTerm}`;
+
+    let stringOfCategories = categories.map(currentCategory => currentCategory.toString());
+    let stringOfAuthors = authors.map(currentAuthor => currentAuthor.toString());
+
+    stringOfAuthors = stringOfAuthors.toString();
+    stringOfCategories = stringOfCategories.toString();
+
+    console.log(stringOfCategories);
+
+    if (stringOfCategories !== '') {
+      historyPushValue = `${historyPushValue}&categories=${stringOfCategories}`;
+    }
+
+    if (stringOfAuthors !== '') {
+      historyPushValue = `${historyPushValue}&author=${stringOfAuthors}`;
+    }
+
+    historyPushValue = `${historyPushValue}&page=${pageNumber}`;
+
+    return historyPushValue;
+  };
+
   render() {
     return (
       <div>
+        <Header
+          searchTerm={this.state.searchTerm}
+          categoryValues={this.state.categoryValues}
+          authorValues={this.state.authorValues}
+          pageNumber={this.state.pageNumber}
+          createLinkForSearch={this.createLinkForSearch}
+        />
         <Switch>
           <Route
             exact
@@ -82,11 +116,12 @@ class Main extends Component<Props, State> {
                 authors={this.state.authors}
                 authorValues={this.state.authorValues}
                 handleAuthorChange={this.handleAuthorChange}
+                pageNumber={this.state.pageNumber}
                 {...props}
               />
             )}
           />
-          <Route path="/search" component={props => <Search {...props} />} />
+          <Route path="/search" component={props => <Search pageNumber={this.state.pageNumber} {...props} />} />
           <Route path="/article/:id" component={props => <Article {...props} />} />
 
           <Route component={Fourohfour} />

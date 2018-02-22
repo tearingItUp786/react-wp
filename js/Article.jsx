@@ -38,7 +38,6 @@ class Article extends Component<Props, State> {
       })
       .then(() => getRelatedPostsBasedOnCategory(this.state.article.categories))
       .then(response => {
-        console.log(response.data);
         this.setState({ relatedPosts: response.data });
       })
       .catch(err => console.log(err));

@@ -14,14 +14,15 @@ type Props = {
   authors: Array<*>,
   authorValues: Array<*>,
   searchTerm: string,
-  history: RouterHistory
+  history: RouterHistory,
+  pageNumber: number
 };
 
 const Landing = (props: Props) => {
   const goToArticleSearch = (event: SyntheticEvent<*>) => {
     event.preventDefault();
 
-    let historyPushValue = `/search?searchTerm=${props.searchTerm}&page=1`;
+    let historyPushValue = `/search?searchTerm=${props.searchTerm}`;
     let stringOfCategories = props.categoryValues.map(currentCategory => currentCategory.toString());
     let stringOfAuthors = props.authorValues.map(currentAuthor => currentAuthor.toString());
     stringOfAuthors = stringOfAuthors.toString();
@@ -34,6 +35,8 @@ const Landing = (props: Props) => {
     if (stringOfAuthors !== '') {
       historyPushValue = `${historyPushValue}&author=${stringOfAuthors}`;
     }
+
+    historyPushValue = `${historyPushValue}&page=${props.pageNumber}`;
 
     props.history.push(`${historyPushValue}`);
   };

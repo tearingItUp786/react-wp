@@ -7,19 +7,23 @@ import { withRouter } from 'react-router';
 import { WP_REST_URL } from './config';
 
 type State = {
-  siteTitle: string
+  siteTitle: string,
+  backToSearchLink: string
 };
 
 type Props = {
   location: Location,
-  history: {
-    goBack: Function
-  }
+  categoryValues: Array<*>,
+  authorValues: Array<*>,
+  searchTerm: string,
+  pageNumber: number,
+  createLinkForSearch: Function
 };
 
 class Header extends Component<Props, State> {
   state = {
-    siteTitle: 'Default Title'
+    siteTitle: 'Default Title',
+    backToSearchLink: '/search'
   };
 
   componentDidMount() {
@@ -31,6 +35,14 @@ class Header extends Component<Props, State> {
       .catch(error => console.log(error));
   }
 
+  // not allowed to set state inside of componentDidMount when receiving props from parent -- best place is below
+  componentWillReceiveProps() {
+    const { pageNumber, searchTerm, categoryValues, authorValues } = this.props;
+    const backToSearchLink = this.props.createLinkForSearch(pageNumber, searchTerm, categoryValues, authorValues);
+
+    this.setState({ backToSearchLink });
+  }
+
   render() {
     const { location } = this.props;
     let utilSpace = '';
@@ -38,9 +50,9 @@ class Header extends Component<Props, State> {
     if (location.pathname.indexOf('article') !== -1) {
       utilSpace = (
         <div className="collapse navbar-collapse" id="navbarText">
-          <button onClick={() => this.props.history.goBack()} className="navbar-text">
-            Back
-          </button>
+          <Link className="navbar-text" to={this.state.backToSearchLink}>
+            Back to Search
+          </Link>
         </div>
       );
     }

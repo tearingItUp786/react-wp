@@ -117,7 +117,6 @@ class Search extends Component<Props, State> {
     });
 
     const searchURL = constructWordPressPostURL({ currentPage, perPage, searchTerm, categories, authors });
-    console.log(authors, searchURL);
     return searchURL;
   };
 
