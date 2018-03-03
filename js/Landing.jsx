@@ -7,8 +7,7 @@ import Authors from './Authors';
 
 type Props = {
   handleSearchTermChange: Function,
-  handleCategoryChange: Function,
-  handleAuthorChange: Function,
+  handleSelectChange: Function,
   categoryValues: Array<*>,
   categories: Array<*>,
   authors: Array<*>,
@@ -59,11 +58,11 @@ const Landing = (props: Props) => {
             </label>
           </div>
           <Categories
-            handleCategoryChange={props.handleCategoryChange}
+            handleSelectChange={props.handleSelectChange}
             values={props.categoryValues}
             categories={props.categories}
           />
-          <Authors handleAuthorChange={props.handleAuthorChange} values={props.authorValues} authors={props.authors} />
+          <Authors handleSelectChange={props.handleSelectChange} values={props.authorValues} authors={props.authors} />
           <button type="submit" className="btn btn-primary">
             Search
           </button>

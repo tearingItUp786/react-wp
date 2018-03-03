@@ -5,7 +5,7 @@ import React from 'react';
 type Props = {
   authors: Array<any>,
   values: Array<*>,
-  handleAuthorChange: Function
+  handleSelectChange: Function
 };
 
 const Authors = (props: Props) => (
@@ -14,7 +14,7 @@ const Authors = (props: Props) => (
       Authors select
       <select
         multiple
-        onChange={props.handleAuthorChange}
+        onChange={(event: SyntheticEvent<*>) => props.handleSelectChange(event, 'authors')}
         value={props.values}
         className="form-control"
         id="exampleSelect2"

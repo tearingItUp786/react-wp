@@ -50,26 +50,26 @@ class Main extends Component<Props, State> {
     this.setState({ searchTerm: event.target.value });
   };
 
-  handleCategoryChange = (event: SyntheticEvent<*>) => {
+  handleSelectChange = (event: SyntheticEvent<*>, item: string) => {
     const { options } = event.currentTarget;
-    const categoryValues = [];
+    const values = [];
     for (let i = 0; i < options.length; i += 1) {
       if (options[i].selected) {
-        categoryValues.push(options[i].value);
+        values.push(options[i].value);
       }
     }
-    this.setState({ categoryValues });
-  };
 
-  handleAuthorChange = (event: SyntheticEvent<*>) => {
-    const { options } = event.currentTarget;
-    const authorValues = [];
-    for (let i = 0; i < options.length; i += 1) {
-      if (options[i].selected) {
-        authorValues.push(options[i].value);
-      }
+    if (item === 'categories') {
+      this.setState({
+        categoryValues: values
+      });
     }
-    this.setState({ authorValues });
+
+    if (item === 'authors') {
+      this.setState({
+        authorValues: values
+      });
+    }
   };
 
   createLinkForSearch = (pageNumber: number, searchTerm: string, categories: Array<*>, authors: Array<*>) => {
@@ -116,10 +116,9 @@ class Main extends Component<Props, State> {
                 categories={this.state.categories}
                 categoryValues={this.state.categoryValues}
                 handleSearchTermChange={this.handleSearchTermChange}
-                handleCategoryChange={this.handleCategoryChange}
+                handleSelectChange={this.handleSelectChange}
                 authors={this.state.authors}
                 authorValues={this.state.authorValues}
-                handleAuthorChange={this.handleAuthorChange}
                 pageNumber={this.state.pageNumber}
                 {...props}
               />

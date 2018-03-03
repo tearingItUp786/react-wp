@@ -19,7 +19,7 @@ type State = {
   data: Array<*>,
   searchTerm: string,
   categories: string,
-  author: string,
+  authors: string,
   totalPages: number,
   perPage: number
 };
@@ -44,14 +44,24 @@ class Search extends Component<Props, State> {
           this.setState({ totalPages: response.headers['x-wp-totalpages'] });
         }
       })
+      .then(() => Promise.resolve(this.getURLParams()))
+      .then(response => {
+        // console.log(response);
+        const { searchTerm, categories, authors } = response;
+        this.setState({
+          searchTerm,
+          categories,
+          authors
+        });
+      })
       .catch(error => console.log(error));
   }
 
-  createSearchURL = () => {
+  getURLParams = () => {
     const params = new URLSearchParams(this.props.location.search);
-    let searchTerm;
-    let categories;
-    let authors;
+    let searchTerm = '';
+    let categories = '';
+    let authors = '';
     const { pageNumber } = this.props;
     const { perPage } = this.state;
     let currentPage = pageNumber;
@@ -75,20 +85,18 @@ class Search extends Component<Props, State> {
       }
     }
 
-    // $FlowFixMe
-    this.setState({
-      searchTerm,
-      categories,
-      authors
-    });
+    return { currentPage, perPage, searchTerm, categories, authors };
+  };
 
-    const searchURL = constructWordPressPostURL({ currentPage, perPage, searchTerm, categories, authors });
+  createSearchURL = () => {
+    const searchURL = constructWordPressPostURL(this.getURLParams());
     return searchURL;
   };
 
   render() {
     const { pageNumber } = this.props;
-    const { searchTerm, categories, authors, totalPages } = this.state;
+    const { category } = this.props.match.params;
+    const { searchTerm, categories, authors, totalPages, data } = this.state;
     return (
       <div className="row">
         <div className="col-sm-12">
@@ -101,10 +109,10 @@ class Search extends Component<Props, State> {
           />
         </div>
         <div className="col-sm-12">
-          <h1>{this.props.match.params.category}</h1>
+          <h1>{category}</h1>
           <h1>Search</h1>
-          <h2>{this.props.match.params.searchTerm}</h2>
-          {this.state.data.map(currentArticle => <ArticleCard key={currentArticle.id} {...currentArticle} />)}
+          <h2>{searchTerm}</h2>
+          {data.map(currentArticle => <ArticleCard key={currentArticle.id} {...currentArticle} />)}
         </div>
       </div>
     );

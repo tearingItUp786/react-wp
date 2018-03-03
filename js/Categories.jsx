@@ -5,7 +5,7 @@ import React from 'react';
 type Props = {
   categories: Array<any>,
   values: Array<*>,
-  handleCategoryChange: Function
+  handleSelectChange: Function
 };
 
 const Categories = (props: Props) => (
@@ -14,7 +14,7 @@ const Categories = (props: Props) => (
       Categories select
       <select
         multiple
-        onChange={props.handleCategoryChange}
+        onChange={(event: SyntheticEvent<*>) => props.handleSelectChange(event, 'categories')}
         value={props.values}
         className="form-control"
         id="exampleSelect1"
