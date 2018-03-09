@@ -11,14 +11,12 @@
     "lint:fix": "eslint **/*.{js,jsx} --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "test:update": "jest -u",
     "watch": "webpack --watch",
     "flow": "flow"
   },
-  "pre-commit": [
-    "lint",
-    "format"
-  ],
+  "pre-commit": ["lint", "format"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tearingItUp786/react-wp.git"
@@ -29,11 +27,7 @@
     "url": "https://github.com/tearingItUp786/react-wp/issues"
   },
   "homepage": "https://github.com/tearingItUp786/react-wp#readme",
-  "jest": {
-    "snapshotSerializers": [
-      "jest-serializer-enzyme"
-    ]
-  },
+  "jest": {},
   "dependencies": {
     "axios": "^0.17.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.2",
@@ -79,8 +73,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.6.1",
     "flow-bin": "^0.64.0",
-    "jest": "^22.1.4",
-    "jest-serializer-enzyme": "^1.0.0",
+    "jest": "^19.0.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.10.2",
     "react-hot-loader": "^3.1.3",

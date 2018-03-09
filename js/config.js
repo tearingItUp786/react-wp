@@ -6,7 +6,7 @@ export const WP_CATEGORIES = `${WP_REST_URL}wp/v2/categories`;
 export const WP_SETTINGS = `${WP_REST_URL}wp/v2/settings`;
 export const WP_USERS = `${WP_REST_URL}wp/v2/users`;
 
-export function constructWordPressPostURL({ currentPage, perPage, searchTerm, categories, authors }) {
+export function constructWordPressPostURL({ currentPage = 1, perPage = 5, searchTerm, categories, authors } = {}) {
   let searchURL = `${WP_POSTS}?`;
 
   searchURL = `${searchURL}page=${currentPage}`;

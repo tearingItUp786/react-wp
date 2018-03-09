@@ -62,6 +62,7 @@ class Article extends Component<Props, State> {
                     id={currentValue.id}
                     title={currentValue.title}
                     featured_media={currentValue.featured_media}
+                    excerpt={null}
                   />
                 </div>
               ))}

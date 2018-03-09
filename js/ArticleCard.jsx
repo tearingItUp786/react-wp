@@ -3,14 +3,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type Props = {
+export type ArticleCardType = {
   id: string,
   title: { rendered: string },
   excerpt: ?{ rendered: string },
   featured_media: string
 };
 
-const ArticleCard = (props: Props) => (
+const ArticleCard = (props: ArticleCardType) => (
   <div className="row">
     <Link to={`/article/${props.id}`}>
       <div className="col-sm-12">
