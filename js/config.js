@@ -15,7 +15,7 @@ export function constructWordPressPostURL({ currentPage = 1, perPage = 5, search
     searchURL = `${searchURL}page=1`;
   }
 
-  if (perPage !== 0) {
+  if (perPage > 0) {
     searchURL = `${searchURL}&per_page=${perPage}`;
   }
 
